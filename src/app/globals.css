@@ -1,0 +1,198 @@
+@import "tailwindcss";
+
+:root {
+  --font-fraunces: "Fraunces", "Instrument Serif", Georgia, serif;
+  --font-jakarta: "Plus Jakarta Sans", Inter, system-ui, -apple-system, sans-serif;
+}
+
+@theme {
+  /* Brand Colors - D-Connect Premium Nigerian */
+  --color-emerald-950: #081F18;
+  --color-emerald-900: #0E3327;
+  --color-emerald-800: #123F2F;
+  --color-emerald-700: #1A5A44;
+  --color-emerald-600: #216E53;
+  --color-emerald-500: #2A8465;
+  --color-emerald-100: #D6E8E0;
+  --color-emerald-50: #EAF3EF;
+
+  --color-tangerine-600: #E05A00;
+  --color-tangerine-500: #FF6B18;
+  --color-tangerine-400: #FF8A3D;
+  --color-tangerine-300: #FFB07A;
+  --color-tangerine-100: #FFE8D6;
+  --color-tangerine-50: #FFF2E8;
+
+  --color-cream-50: #FFFBF5;
+  --color-cream-100: #FFF6E8;
+  --color-cream-200: #FDF0D9;
+  --color-cream-300: #F9E6C0;
+
+  --color-charcoal-950: #0E1513;
+  --color-charcoal-900: #1A1F1E;
+  --color-charcoal-800: #2A3331;
+  --color-charcoal-600: #4A5754;
+  --color-charcoal-400: #7A8A87;
+  --color-charcoal-200: #C5CCC9;
+  --color-charcoal-100: #E6E9E8;
+
+  --color-background: var(--color-cream-50);
+  --color-foreground: var(--color-charcoal-900);
+
+  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-jakarta);
+  --font-mono: ui-monospace, SFMono-Regular, monospace;
+
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-3xl: 28px;
+  --radius-4xl: 36px;
+
+  --shadow-soft: 0 8px 30px rgba(14, 51, 39, 0.06);
+  --shadow-medium: 0 16px 40px rgba(14, 51, 39, 0.10);
+  --shadow-large: 0 24px 60px rgba(14, 51, 39, 0.14);
+}
+
+:root {
+  --background: #FFFBF5;
+  --foreground: #1A1F1E;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #C5CCC9 transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-jakarta), system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Focus styles */
+:focus-visible {
+  outline: 2px solid #FF6B18;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Selection */
+::selection {
+  background: #FF6B18;
+  color: white;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Custom utilities */
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Premium scrollbar for webkit */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #C5CCC9;
+  border-radius: 100px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #7A8A87;
+}
+
+/* Animations */
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes reveal-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Grain texture overlay - subtle premium feel */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Image mask reveal */
+.mask-reveal {
+  clip-path: inset(0 100% 0 0);
+  animation: mask-in 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+}
+
+@keyframes mask-in {
+  to { clip-path: inset(0 0 0 0); }
+}
+
+/* Smooth underline */
+.hover-underline {
+  position: relative;
+}
+.hover-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hover-underline:hover::after {
+  transform: scaleX(1);
+}
