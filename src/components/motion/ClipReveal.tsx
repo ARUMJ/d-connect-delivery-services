@@ -68,6 +68,7 @@ export function ClipReveal({
       }}
     >
       <div
+        className="relative h-full w-full"
         style={{
           transform: !isInView && !prefersReducedMotion ? (direction === "left" ? "translateX(-20px)" : direction === "right" ? "translateX(20px)" : "translateY(12px)") : "translateX(0) translateY(0)",
           transitionProperty: "transform",
@@ -110,7 +111,7 @@ export function MaskedImageReveal({
       }}
     >
       <div
-        className="will-change-transform"
+        className="relative h-full w-full will-change-transform"
         style={{
           transform: !isInView && !prefersReducedMotion ? "scale(1.08)" : "scale(1)",
           transitionProperty: "transform",
