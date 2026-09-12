@@ -22,7 +22,7 @@ export const CATEGORIES = [
     id: "garri-cassava",
     name: "Garri & Cassava",
     description: "Ijebu, Egba, white and yellow garri, cassava flour",
-    image: "https://images.unsplash.com/photo-1608198093002-ad4e005484ec?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1547592180-85f173990554?q=80&w=800&auto=format&fit=crop",
     accent: "bg-cream-200",
   },
   {
@@ -75,7 +75,7 @@ export const FEATURED_PRODUCTS = [
     name: "Garri Ijebu",
     category: "Garri & Cassava",
     description: "Crunchy, sour, finely textured - authentic Ijebu taste",
-    image: "https://images.unsplash.com/photo-1547592180-85f173990554?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?q=80&w=800&auto=format&fit=crop",
   },
   {
     id: "honey-beans",
@@ -110,14 +110,14 @@ export const FEATURED_PRODUCTS = [
     name: "Egusi Seeds",
     category: "Other Foodstuff",
     description: "Hand-picked melon seeds, ready for your soup",
-    image: "https://images.unsplash.com/photo-1547592180-85f173990554?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=800&auto=format&fit=crop",
   },
   {
     id: "provisions-pack",
     name: "Provisions Pack",
     category: "Provisions",
     description: "Curated household essentials - customizable to your needs",
-    image: "https://images.unsplash.com/photo-1608198093002-ad4e005484ec?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1542838130269-3a0b1b0f1f6a?q=80&w=800&auto=format&fit=crop",
   },
 ] as const;
 
