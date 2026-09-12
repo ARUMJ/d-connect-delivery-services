@@ -1,6 +1,9 @@
+"use client";
+
 import { VALUE_PROPS } from "@/lib/constants";
 import { Section } from "@/components/ui/Section";
-import { Reveal } from "@/components/ui/Reveal";
+import { useInView } from "@/hooks/useInView";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 const icons: Record<string, React.ReactNode> = {
   clock: (
@@ -25,79 +28,199 @@ const icons: Record<string, React.ReactNode> = {
   ),
 };
 
+function ValueText() {
+  const { ref, isInView } = useInView<HTMLDivElement>({ threshold: 0.2, once: true });
+  const prefersReducedMotion = useReducedMotion();
+
+  return (
+    <div ref={ref} className="lg:sticky lg:top-28">
+      <div
+        className="mb-4 inline-flex items-center gap-2.5 will-change-transform"
+        style={{
+          opacity: isInView ? 1 : 0,
+          transform: isInView ? "translateX(0)" : "translateX(-16px)",
+          transition: prefersReducedMotion ? "none" : "opacity 600ms cubic-bezier(0.16,1,0.3,1), transform 600ms cubic-bezier(0.16,1,0.3,1)",
+        }}
+      >
+        <span className="h-px w-8 bg-tangerine-500" />
+        <span className="text-[11px] font-semibold tracking-[0.14em] uppercase text-tangerine-600">Why D-Connect</span>
+      </div>
+      <h2 className="font-display text-[30px] font-semibold leading-[0.95] tracking-[-0.03em] text-charcoal-900 text-balance sm:text-[32px] md:text-[38px] lg:text-[40px]">
+        <span className="block overflow-hidden">
+          <span
+            className="block will-change-transform"
+            style={{
+              transform: isInView ? "translateY(0)" : "translateY(100%)",
+              transition: prefersReducedMotion ? "none" : "transform 800ms cubic-bezier(0.77,0,0.175,1)",
+              transitionDelay: "80ms",
+            }}
+          >
+            Built for
+          </span>
+        </span>
+        <span className="block overflow-hidden">
+          <span
+            className="block will-change-transform"
+            style={{
+              transform: isInView ? "translateY(0)" : "translateY(100%)",
+              transition: prefersReducedMotion ? "none" : "transform 800ms cubic-bezier(0.77,0,0.175,1)",
+              transitionDelay: "140ms",
+            }}
+          >
+            Nigerian households
+          </span>
+        </span>
+        <span className="block overflow-hidden">
+          <span
+            className="block italic font-normal text-emerald-800 will-change-transform"
+            style={{
+              transform: isInView ? "translateY(0)" : "translateY(100%)",
+              transition: prefersReducedMotion ? "none" : "transform 800ms cubic-bezier(0.77,0,0.175,1)",
+              transitionDelay: "200ms",
+            }}
+          >
+            who buy in bulk
+          </span>
+        </span>
+      </h2>
+      <p
+        className="mt-4 max-w-[44ch] text-[14.5px] leading-[1.6] text-charcoal-600 text-balance md:text-[15px] will-change-transform"
+        style={{
+          opacity: isInView ? 1 : 0,
+          transform: isInView ? "translateY(0)" : "translateY(16px)",
+          transition: prefersReducedMotion ? "none" : "opacity 700ms cubic-bezier(0.16,1,0.3,1), transform 700ms cubic-bezier(0.16,1,0.3,1)",
+          transitionDelay: "280ms",
+        }}
+      >
+        D-Connect focuses on what matters: convenient ordering, reliable sourcing, and doorstep delivery for your foodstuff and provisions. No market stress.
+      </p>
+
+      <div
+        className="mt-8 hidden lg:block will-change-transform"
+        style={{
+          opacity: isInView ? 1 : 0,
+          transform: isInView ? "translateY(0)" : "translateY(12px)",
+          transition: prefersReducedMotion ? "none" : "opacity 600ms ease, transform 600ms cubic-bezier(0.16,1,0.3,1)",
+          transitionDelay: "360ms",
+        }}
+      >
+        <div className="rounded-[16px] bg-cream-50 border border-charcoal-900/[0.06] p-4">
+          <p className="text-[12.5px] font-semibold text-charcoal-900">Factual & general claims only</p>
+          <p className="mt-1.5 text-[12px] leading-[1.5] text-charcoal-600">No invented statistics, awards, or testimonials — just clear benefits you can verify.</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ValueCard({ prop, index }: { prop: (typeof VALUE_PROPS)[number]; index: number }) {
+  const { ref, isInView } = useInView<HTMLDivElement>({ threshold: 0.15, once: true });
+  const prefersReducedMotion = useReducedMotion();
+
+  // Alternating horizontal movement for editorial feel
+  const isEven = index % 2 === 0;
+  const getInitialTransform = () => {
+    if (prefersReducedMotion) return "translateY(0) translateX(0)";
+    // Text enters from alternating sides
+    return isEven ? "translateX(20px) translateY(16px)" : "translateX(-20px) translateY(16px)";
+  };
+
+  return (
+    <div
+      ref={ref}
+      className="group relative flex h-full min-h-[180px] flex-col bg-cream-50 p-6 transition-colors duration-500 hover:bg-white md:min-h-[200px] md:p-7 will-change-transform"
+      style={{
+        opacity: isInView ? 1 : 0,
+        transform: isInView ? "translateX(0) translateY(0) scale(1)" : `${getInitialTransform()} scale(0.97)`,
+        transition: prefersReducedMotion ? "none" : "opacity 700ms cubic-bezier(0.16,1,0.3,1), transform 800ms cubic-bezier(0.16,1,0.3,1)",
+        transitionDelay: `${index * 90}ms`,
+      }}
+    >
+      <div
+        className="flex size-9 items-center justify-center rounded-full bg-charcoal-900 text-cream-50 shadow-sm transition-all duration-500 group-hover:bg-emerald-900 group-hover:scale-[1.04] will-change-transform"
+        style={{
+          transform: isInView ? "scale(1) rotate(0deg)" : "scale(0.8) rotate(-8deg)",
+          transition: prefersReducedMotion ? "none" : "transform 600ms cubic-bezier(0.16,1,0.3,1)",
+          transitionDelay: `${index * 90 + 100}ms`,
+        }}
+      >
+        {icons[prop.icon]}
+      </div>
+      <h3
+        className="mt-5 font-display text-[18px] font-semibold tracking-[-0.01em] text-charcoal-900 md:text-[19px] will-change-transform"
+        style={{
+          opacity: isInView ? 1 : 0,
+          transform: isInView ? "translateY(0)" : "translateY(8px)",
+          transition: prefersReducedMotion ? "none" : "opacity 500ms ease, transform 500ms cubic-bezier(0.16,1,0.3,1)",
+          transitionDelay: `${index * 90 + 150}ms`,
+        }}
+      >
+        {prop.title}
+      </h3>
+      <p
+        className="mt-2 text-[13.5px] leading-[1.6] text-charcoal-600 will-change-transform"
+        style={{
+          opacity: isInView ? 1 : 0,
+          transform: isInView ? "translateY(0)" : "translateY(8px)",
+          transition: prefersReducedMotion ? "none" : "opacity 500ms ease, transform 500ms cubic-bezier(0.16,1,0.3,1)",
+          transitionDelay: `${index * 90 + 200}ms`,
+        }}
+      >
+        {prop.description}
+      </p>
+
+      <div className="pointer-events-none absolute bottom-0 left-6 right-6 h-px origin-left scale-x-0 bg-tangerine-500/70 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100" />
+    </div>
+  );
+}
+
 export function ValueProps() {
+  const { ref: sectionRef, isInView: sectionInView } = useInView<HTMLDivElement>({ threshold: 0.05, once: true });
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <Section id="about" className="bg-white border-y border-charcoal-900/[0.06]">
-      <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-10">
+      <div ref={sectionRef} className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-10">
         <div className="lg:col-span-5">
-          <Reveal>
-            <div className="lg:sticky lg:top-28">
-              <div className="mb-4 inline-flex items-center gap-2.5">
-                <span className="h-px w-8 bg-tangerine-500" />
-                <span className="text-[11px] font-semibold tracking-[0.14em] uppercase text-tangerine-600">Why D-Connect</span>
-              </div>
-              <h2 className="font-display text-[30px] font-semibold leading-[0.95] tracking-[-0.03em] text-charcoal-900 text-balance sm:text-[32px] md:text-[38px] lg:text-[40px]">
-                Built for
-                <br />
-                Nigerian households
-                <br />
-                <span className="italic font-normal text-emerald-800">who buy in bulk</span>
-              </h2>
-              <p className="mt-4 max-w-[44ch] text-[14.5px] leading-[1.6] text-charcoal-600 text-balance md:text-[15px]">
-                D-Connect focuses on what matters: convenient ordering, reliable sourcing, and doorstep delivery for your foodstuff and provisions. No market stress.
-              </p>
-
-              <div className="mt-8 hidden lg:block">
-                <div className="rounded-[16px] bg-cream-50 border border-charcoal-900/[0.06] p-4">
-                  <p className="text-[12.5px] font-semibold text-charcoal-900">Factual & general claims only</p>
-                  <p className="mt-1.5 text-[12px] leading-[1.5] text-charcoal-600">
-                    No invented statistics, awards, or testimonials — just clear benefits you can verify.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </Reveal>
+          <ValueText />
         </div>
 
         <div className="lg:col-span-7">
           <div className="grid grid-cols-1 gap-px overflow-hidden rounded-[20px] bg-charcoal-900/[0.06] p-px sm:grid-cols-2 md:rounded-[22px]">
             {VALUE_PROPS.map((prop, index) => (
-              <Reveal key={prop.title} delay={index * 70} className="h-full">
-                <div className="group relative flex h-full min-h-[180px] flex-col bg-cream-50 p-6 transition-colors duration-500 hover:bg-white md:min-h-[200px] md:p-7">
-                  <div className="flex size-9 items-center justify-center rounded-full bg-charcoal-900 text-cream-50 shadow-sm transition-all duration-500 group-hover:bg-emerald-900 group-hover:scale-[1.04]">
-                    {icons[prop.icon]}
-                  </div>
-                  <h3 className="mt-5 font-display text-[18px] font-semibold tracking-[-0.01em] text-charcoal-900 md:text-[19px]">
-                    {prop.title}
-                  </h3>
-                  <p className="mt-2 text-[13.5px] leading-[1.6] text-charcoal-600">{prop.description}</p>
-
-                  {/* Hover accent */}
-                  <div className="pointer-events-none absolute bottom-0 left-6 right-6 h-px origin-left scale-x-0 bg-tangerine-500/70 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100" />
-                </div>
-              </Reveal>
+              <ValueCard key={prop.title} prop={prop} index={index} />
             ))}
           </div>
 
-          {/* Extra context - refined */}
-          <Reveal delay={280}>
-            <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
-              <div className="rounded-[14px] bg-emerald-900 px-4 py-3.5 text-cream-50">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-cream-100/60">Ordering</p>
-                <p className="mt-1 font-display text-[13.5px] font-medium leading-[1.25]">Via WhatsApp — familiar & quick</p>
+          <div
+            className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-3 will-change-transform"
+            style={{
+              opacity: sectionInView ? 1 : 0,
+              transform: sectionInView ? "translateY(0)" : "translateY(16px)",
+              transition: prefersReducedMotion ? "none" : "opacity 700ms cubic-bezier(0.16,1,0.3,1), transform 700ms cubic-bezier(0.16,1,0.3,1)",
+              transitionDelay: "500ms",
+            }}
+          >
+            {[
+              { label: "Ordering", value: "Via WhatsApp — familiar & quick", bg: "bg-emerald-900 text-cream-50" },
+              { label: "Focus", value: "Foodstuff & provisions, not cooked meals", bg: "bg-tangerine-50 border border-tangerine-100 text-charcoal-900", labelColor: "text-tangerine-600/70" },
+              { label: "Experience", value: "Premium, modern Nigerian brand", bg: "bg-charcoal-900 text-cream-50" },
+            ].map((item, i) => (
+              <div
+                key={i}
+                className={`rounded-[14px] px-4 py-3.5 will-change-transform ${item.bg}`}
+                style={{
+                  opacity: sectionInView ? 1 : 0,
+                  transform: sectionInView ? "translateY(0) scale(1)" : "translateY(12px) scale(0.98)",
+                  transition: prefersReducedMotion ? "none" : "opacity 600ms cubic-bezier(0.16,1,0.3,1), transform 600ms cubic-bezier(0.16,1,0.3,1)",
+                  transitionDelay: `${600 + i * 80}ms`,
+                }}
+              >
+                <p className={`text-[10px] font-semibold uppercase tracking-[0.08em] ${item.labelColor || "text-cream-100/60"}`}>{item.label}</p>
+                <p className="mt-1 font-display text-[13.5px] font-medium leading-[1.25]">{item.value}</p>
               </div>
-              <div className="rounded-[14px] bg-tangerine-50 border border-tangerine-100 px-4 py-3.5">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-tangerine-600/70">Focus</p>
-                <p className="mt-1 font-display text-[13.5px] font-medium leading-[1.25] text-charcoal-900">
-                  Foodstuff & provisions, not cooked meals
-                </p>
-              </div>
-              <div className="rounded-[14px] bg-charcoal-900 px-4 py-3.5 text-cream-50">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-cream-100/60">Experience</p>
-                <p className="mt-1 font-display text-[13.5px] font-medium leading-[1.25]">Premium, modern Nigerian brand</p>
-              </div>
-            </div>
-          </Reveal>
+            ))}
+          </div>
         </div>
       </div>
     </Section>

@@ -2,10 +2,10 @@ import { CATEGORIES, FEATURED_PRODUCTS } from "@/lib/constants";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Section } from "@/components/ui/Section";
-import { Reveal, StaggerContainer } from "@/components/ui/Reveal";
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { ProductsGridMotion, ProductsHeroMotion } from "@/components/products/ProductsGridMotion";
 
 export const metadata: Metadata = {
   title: "Foodstuff & Provisions Catalogue",
@@ -36,10 +36,9 @@ export default async function ProductsPage({
     <div className="flex min-h-screen flex-col bg-cream-50">
       <Header />
       <main className="flex-1">
-        {/* Hero / Intro */}
         <Section className="bg-cream-50 !pb-8 pt-28 md:pt-32">
-          <div className="max-w-3xl">
-            <Reveal>
+          <ProductsHeroMotion>
+            <div className="max-w-3xl">
               <div className="mb-4 inline-flex items-center gap-2.5">
                 <span className="h-px w-8 bg-tangerine-500" />
                 <span className="text-[11px] font-semibold tracking-[0.14em] uppercase text-tangerine-600">Catalogue</span>
@@ -52,11 +51,10 @@ export default async function ProductsPage({
               <p className="mt-4 max-w-[52ch] text-[16px] leading-[1.6] text-charcoal-600 text-balance md:text-[17px]">
                 Browse the foodstuff and provisions available through D-Connect. From bulk rice and garri to oils, spices and household essentials. View products first, then enquire via WhatsApp — no prices until verified.
               </p>
-            </Reveal>
-          </div>
+            </div>
+          </ProductsHeroMotion>
         </Section>
 
-        {/* Categories */}
         <Section className="!py-8 md:!py-10 bg-white border-y border-charcoal-900/[0.06]">
           <div className="flex flex-col gap-6">
             <div className="flex items-center justify-between">
@@ -127,7 +125,6 @@ export default async function ProductsPage({
           </div>
         </Section>
 
-        {/* Products Grid */}
         <Section className="bg-cream-50">
           <div className="flex flex-col gap-6">
             <div className="flex items-baseline justify-between gap-4">
@@ -147,36 +144,7 @@ export default async function ProductsPage({
                 </Link>
               </div>
             ) : (
-              <StaggerContainer stagger={50} className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {filteredProducts.map((product) => (
-                  <Link
-                    key={product.id}
-                    href={`/products/${product.slug}`}
-                    className="group relative flex flex-col overflow-hidden rounded-[20px] bg-white border border-charcoal-900/[0.06] p-2 transition-all duration-300 hover:shadow-[0_10px_28px_rgba(0,0,0,0.06)] hover:-translate-y-[2px] hover:border-charcoal-900/10"
-                  >
-                    <div className="relative aspect-[4/3] overflow-hidden rounded-[14px] bg-cream-100">
-                      <Image src={product.image} alt={product.name} fill className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" sizes="400px" />
-                      <div className="absolute left-2.5 top-2.5">
-                        <span className="inline-flex rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-semibold uppercase text-charcoal-700 backdrop-blur-md shadow-sm border border-white/20">
-                          {product.category}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="flex flex-1 flex-col p-3.5">
-                      <h3 className="font-display text-[16px] font-semibold leading-[1.25] tracking-[-0.01em] text-charcoal-900">{product.name}</h3>
-                      <p className="mt-1 line-clamp-2 text-[12.5px] leading-[1.5] text-charcoal-600">{product.description}</p>
-                      <div className="mt-auto flex items-center justify-between pt-3.5">
-                        <span className="text-[10.5px] font-medium uppercase tracking-[0.06em] text-charcoal-500">View details</span>
-                        <span className="inline-flex size-7 items-center justify-center rounded-full bg-cream-100 text-charcoal-700 transition-colors group-hover:bg-emerald-900 group-hover:text-white">
-                          <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-                            <path d="M6 3l5 5-5 5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-                          </svg>
-                        </span>
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-              </StaggerContainer>
+              <ProductsGridMotion products={filteredProducts} />
             )}
 
             <div className="mt-8 rounded-[16px] border border-dashed border-charcoal-900/12 bg-white/60 px-5 py-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-3">

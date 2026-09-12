@@ -1,48 +1,90 @@
+"use client";
+
 import { CATEGORIES } from "@/lib/constants";
-import { Section, SectionHeader } from "@/components/ui/Section";
-import { Reveal, StaggerContainer } from "@/components/ui/Reveal";
+import { Section } from "@/components/ui/Section";
+import { Reveal } from "@/components/ui/Reveal";
+import { StaggerMotion } from "@/components/motion/SectionMotion";
+import { ClipReveal } from "@/components/motion/ClipReveal";
+import { useInView } from "@/hooks/useInView";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 import Image from "next/image";
 import Link from "next/link";
+
+function CategoryHeading() {
+  const { ref, isInView } = useInView<HTMLDivElement>({ threshold: 0.2, once: true });
+  const prefersReducedMotion = useReducedMotion();
+
+  return (
+    <div ref={ref} className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between md:gap-8">
+      <div className="max-w-3xl">
+        <div
+          className="mb-3.5 inline-flex items-center gap-2.5 will-change-transform"
+          style={{
+            opacity: isInView ? 1 : 0,
+            transform: isInView ? "translateX(0)" : "translateX(-16px)",
+            transition: prefersReducedMotion ? "none" : "opacity 700ms cubic-bezier(0.16,1,0.3,1), transform 700ms cubic-bezier(0.16,1,0.3,1)",
+          }}
+        >
+          <span className="h-px w-7 bg-tangerine-500 md:w-8" />
+          <span className="text-[10.5px] font-semibold tracking-[0.14em] uppercase text-tangerine-600 md:text-[11px]">Categories</span>
+        </div>
+        <h2
+          className="font-display text-[28px] font-[600] leading-[0.95] tracking-[-0.03em] text-charcoal-900 text-balance sm:text-[32px] md:text-[40px] lg:text-[46px] xl:text-[50px] will-change-transform"
+          style={{
+            opacity: isInView ? 1 : 0,
+            transform: isInView ? "translateY(0)" : "translateY(24px)",
+            transition: prefersReducedMotion ? "none" : "opacity 800ms cubic-bezier(0.16,1,0.3,1), transform 800ms cubic-bezier(0.77,0,0.175,1)",
+            transitionDelay: "80ms",
+          }}
+        >
+          Everything you need,
+          <br />
+          <span className="italic font-normal text-emerald-800">in bulk</span>
+        </h2>
+        <p
+          className="mt-3.5 max-w-[52ch] text-[15px] leading-[1.6] text-charcoal-600 text-balance md:mt-4 md:text-[16px] will-change-transform"
+          style={{
+            opacity: isInView ? 1 : 0,
+            transform: isInView ? "translateY(0)" : "translateY(16px)",
+            transition: prefersReducedMotion ? "none" : "opacity 700ms cubic-bezier(0.16,1,0.3,1), transform 700ms cubic-bezier(0.16,1,0.3,1)",
+            transitionDelay: "160ms",
+          }}
+        >
+          From staple grains to everyday provisions. Browse our foodstuff categories and explore products before ordering via WhatsApp.
+        </p>
+      </div>
+
+      <div
+        className="will-change-transform self-start md:self-auto"
+        style={{
+          opacity: isInView ? 1 : 0,
+          transform: isInView ? "translateY(0) scale(1)" : "translateY(12px) scale(0.98)",
+          transition: prefersReducedMotion ? "none" : "opacity 600ms cubic-bezier(0.16,1,0.3,1), transform 600ms cubic-bezier(0.16,1,0.3,1)",
+          transitionDelay: "240ms",
+        }}
+      >
+        <Link
+          href="/products"
+          className="group inline-flex items-center gap-2 self-start rounded-full border border-charcoal-900/10 bg-cream-50 px-5 py-2.5 text-[13.5px] font-medium text-charcoal-900 transition-all hover:bg-charcoal-900 hover:text-cream-50 hover:border-charcoal-900 md:self-auto"
+        >
+          View all products
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="transition-transform duration-300 group-hover:translate-x-0.5">
+            <path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </Link>
+      </div>
+    </div>
+  );
+}
 
 export function Categories() {
   return (
     <Section id="products" className="bg-white">
       <div className="flex flex-col gap-10 md:gap-12 lg:gap-14">
-        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between md:gap-8">
-          <Reveal>
-            <SectionHeader
-              eyebrow="Categories"
-              title={
-                <>
-                  Everything you need,
-                  <br />
-                  <span className="italic font-normal text-emerald-800">in bulk</span>
-                </>
-              }
-              description="From staple grains to everyday provisions. Browse our foodstuff categories and explore products before ordering via WhatsApp."
-            />
-          </Reveal>
+        <CategoryHeading />
 
-          <Reveal delay={180}>
-            <Link
-              href="/products"
-              className="group inline-flex items-center gap-2 self-start rounded-full border border-charcoal-900/10 bg-cream-50 px-5 py-2.5 text-[13.5px] font-medium text-charcoal-900 transition-all hover:bg-charcoal-900 hover:text-cream-50 hover:border-charcoal-900 md:self-auto"
-            >
-              View all products
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 16 16"
-                fill="none"
-                className="transition-transform duration-300 group-hover:translate-x-0.5"
-              >
-                <path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </Link>
-          </Reveal>
-        </div>
-
-        <StaggerContainer stagger={70} className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-12">
+        {/* Mixed direction stagger - each card different entrance */}
+        <StaggerMotion stagger={90} direction="mixed" className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-12">
           {CATEGORIES.map((cat, index) => {
             const getColSpan = () => {
               if (index === 0 || index === 1) return "lg:col-span-6";
@@ -56,7 +98,7 @@ export function Categories() {
                 href={`/products?category=${cat.slug}`}
                 className={`group relative flex flex-col overflow-hidden rounded-[20px] md:rounded-[24px] bg-cream-50 border border-charcoal-900/[0.06] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.08)] hover:-translate-y-[2px] hover:border-charcoal-900/10 ${getColSpan()}`}
               >
-                <div className="relative aspect-[16/10] overflow-hidden sm:aspect-[4/3]">
+                <ClipReveal direction={index % 2 === 0 ? "left" : "right"} duration={800} delay={index * 20} scale className="relative aspect-[16/10] overflow-hidden sm:aspect-[4/3]">
                   <Image
                     src={cat.image}
                     alt={`${cat.name} - Nigerian foodstuff and provisions`}
@@ -77,22 +119,14 @@ export function Categories() {
                   </div>
 
                   <div className="absolute right-3.5 top-3.5 flex size-8 items-center justify-center rounded-full bg-white/90 text-charcoal-900 backdrop-blur-md shadow-sm border border-white/20 transition-all duration-300 group-hover:bg-emerald-900 group-hover:text-white group-hover:border-emerald-900">
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 16 16"
-                      fill="none"
-                      className="transition-transform duration-300 group-hover:rotate-45"
-                    >
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="transition-transform duration-300 group-hover:rotate-45">
                       <path d="M6 3l5 5-5 5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </div>
-                </div>
+                </ClipReveal>
 
                 <div className="relative flex flex-1 flex-col p-4 md:p-5">
-                  <h3 className="font-display text-[18px] font-semibold leading-[1.15] tracking-[-0.02em] text-charcoal-900 md:text-[19px]">
-                    {cat.name}
-                  </h3>
+                  <h3 className="font-display text-[18px] font-semibold leading-[1.15] tracking-[-0.02em] text-charcoal-900 md:text-[19px]">{cat.name}</h3>
                   <p className="mt-1.5 line-clamp-2 text-[13px] leading-[1.5] text-charcoal-600">{cat.description}</p>
                   <div className="mt-auto flex items-center gap-2 pt-4">
                     <span className="inline-flex items-center gap-1.5 rounded-full bg-charcoal-900 px-3 py-1.5 text-[11px] font-medium text-cream-50 transition-colors group-hover:bg-emerald-900">
@@ -106,7 +140,7 @@ export function Categories() {
               </Link>
             );
           })}
-        </StaggerContainer>
+        </StaggerMotion>
 
         <Reveal>
           <div className="flex flex-col gap-3 rounded-[16px] border border-dashed border-charcoal-900/12 bg-cream-50/60 px-5 py-4 md:flex-row md:items-center md:justify-between md:rounded-[18px] md:px-6">
