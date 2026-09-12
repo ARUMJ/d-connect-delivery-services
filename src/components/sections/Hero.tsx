@@ -5,6 +5,7 @@ import { WhatsAppButton } from "@/components/ui/Button";
 import { MESSAGES } from "@/lib/whatsapp";
 import { Reveal } from "@/components/ui/Reveal";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef } from "react";
 
 export function Hero() {
@@ -61,7 +62,6 @@ export function Hero() {
                 </h1>
               </Reveal>
 
-              {/* Decorative line - more refined */}
               <Reveal delay={300} className="absolute -right-6 top-[58%] hidden xl:block">
                 <div className="h-px w-20 bg-gradient-to-r from-tangerine-500/50 to-transparent" />
               </Reveal>
@@ -79,8 +79,8 @@ export function Hero() {
                 <WhatsAppButton message={MESSAGES.general} size="lg" className="w-full sm:w-auto shadow-[0_10px_28px_rgba(255,107,24,0.28)]">
                   Order on WhatsApp
                 </WhatsAppButton>
-                <a
-                  href="#products"
+                <Link
+                  href="/products"
                   className="group inline-flex h-[52px] w-full items-center justify-center gap-2 rounded-full border border-charcoal-900/12 bg-white/60 px-8 text-[14.5px] font-medium tracking-[-0.01em] text-charcoal-900 backdrop-blur-sm transition-all hover:bg-charcoal-900 hover:text-cream-50 hover:border-charcoal-900 sm:w-auto"
                 >
                   Browse Products
@@ -99,27 +99,23 @@ export function Hero() {
                       strokeLinejoin="round"
                     />
                   </svg>
-                </a>
+                </Link>
               </div>
             </Reveal>
 
             <Reveal delay={520}>
               <div className="mt-8 flex items-center gap-5 border-t border-charcoal-900/[0.08] pt-5 md:mt-10 md:gap-6 md:pt-6">
                 <div className="flex -space-x-2.5">
-                  {[1, 2, 3].map((i) => (
+                  {[
+                    "/images/products/long-grain-rice.jpg",
+                    "/images/products/honey-beans.jpg",
+                    "/images/products/garri-ijebu.jpg",
+                  ].map((src, i) => (
                     <div
                       key={i}
                       className="size-9 rounded-full border-[2.5px] border-cream-50 bg-charcoal-100 overflow-hidden shadow-sm"
                     >
-                      <Image
-                        src={`https://images.unsplash.com/photo-${
-                          i === 1 ? "1494790108377-be9c29b29330" : i === 2 ? "1507003211169-0a1dd7228f2d" : "1438761681033-6461ffad8d80"
-                        }?q=80&w=100&auto=format&fit=crop`}
-                        alt=""
-                        width={36}
-                        height={36}
-                        className="h-full w-full object-cover"
-                      />
+                      <Image src={src} alt="" width={36} height={36} className="h-full w-full object-cover" />
                     </div>
                   ))}
                 </div>
@@ -136,21 +132,19 @@ export function Hero() {
           <div className="relative lg:col-span-5 lg:h-[640px] xl:h-[680px]">
             <Reveal delay={260} direction="scale" className="relative h-full">
               <div ref={imageRef} className="relative will-change-transform">
-                {/* Main image card - refined */}
+                {/* Main image card - fixed to foodstuff */}
                 <div className="relative mx-auto aspect-[4/5] w-full max-w-[380px] overflow-hidden rounded-[28px] bg-emerald-900 shadow-[0_20px_60px_rgba(14,51,39,0.18)] md:max-w-[400px] lg:aspect-[4/5] lg:rounded-[32px] xl:max-w-[420px] xl:rounded-[36px]">
                   <Image
-                    src="https://images.unsplash.com/photo-1586201375761-83865001e31c?q=80&w=1200&auto=format&fit=crop"
-                    alt="Assorted Nigerian foodstuff - rice, grains, and provisions in bulk"
+                    src="/images/hero-foodstuff.jpg"
+                    alt="Assorted Nigerian foodstuff - rice, beans, garri, palm oil and provisions in bulk"
                     fill
                     priority
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, 420px"
                   />
-                  {/* Overlay gradient - more refined */}
                   <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/70 via-emerald-900/10 to-transparent" />
                   <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-emerald-950/20" />
 
-                  {/* Floating info card - refined */}
                   <div className="absolute bottom-3.5 left-3.5 right-3.5 rounded-[16px] bg-cream-50/95 p-3.5 backdrop-blur-xl shadow-[0_8px_24px_rgba(0,0,0,0.08)] border border-white/20 md:bottom-4 md:left-4 md:right-4 md:rounded-2xl md:p-4">
                     <div className="flex items-center justify-between gap-3">
                       <div className="min-w-0 flex-1">
@@ -168,16 +162,10 @@ export function Hero() {
                   </div>
                 </div>
 
-                {/* Secondary floating cards - refined positioning to avoid overflow */}
+                {/* Secondary floating cards - fixed images */}
                 <div className="absolute left-0 top-[10%] hidden rounded-[14px] bg-white p-2.5 shadow-[0_8px_24px_rgba(0,0,0,0.08)] border border-charcoal-900/[0.04] md:flex items-center gap-3 lg:left-2 xl:-left-2">
                   <div className="size-11 overflow-hidden rounded-[10px] bg-cream-100">
-                    <Image
-                      src="https://images.unsplash.com/photo-1583524505974-6facd53f4597?q=80&w=200&auto=format&fit=crop"
-                      alt="Beans"
-                      width={44}
-                      height={44}
-                      className="h-full w-full object-cover"
-                    />
+                    <Image src="/images/products/honey-beans.jpg" alt="Honey Beans" width={44} height={44} className="h-full w-full object-cover" />
                   </div>
                   <div className="pr-2">
                     <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-charcoal-500">Bulk</p>
@@ -187,13 +175,7 @@ export function Hero() {
 
                 <div className="absolute right-0 bottom-[26%] hidden rounded-[14px] bg-white p-2.5 shadow-[0_8px_24px_rgba(0,0,0,0.08)] border border-charcoal-900/[0.04] md:flex items-center gap-3 lg:right-2 xl:-right-2">
                   <div className="size-11 overflow-hidden rounded-[10px] bg-cream-100">
-                    <Image
-                      src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?q=80&w=200&auto=format&fit=crop"
-                      alt="Palm oil"
-                      width={44}
-                      height={44}
-                      className="h-full w-full object-cover"
-                    />
+                    <Image src="/images/products/palm-oil.jpg" alt="Palm oil" width={44} height={44} className="h-full w-full object-cover" />
                   </div>
                   <div className="pr-2">
                     <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-charcoal-500">Pure</p>
@@ -201,18 +183,15 @@ export function Hero() {
                   </div>
                 </div>
 
-                {/* Decorative elements - more subtle */}
                 <div className="pointer-events-none absolute -right-8 top-4 hidden size-20 rounded-full border border-tangerine-500/15 lg:block" />
                 <div className="pointer-events-none absolute -left-6 bottom-24 hidden size-14 rounded-full bg-tangerine-500/[0.06] lg:block" />
               </div>
             </Reveal>
 
-            {/* Background shape - more refined */}
             <div className="pointer-events-none absolute left-1/2 top-1/2 -z-10 hidden h-[110%] w-[125%] -translate-x-1/2 -translate-y-1/2 rounded-[40px] bg-gradient-to-br from-emerald-50/80 to-cream-100/80 opacity-50 blur-2xl lg:block" />
           </div>
         </div>
 
-        {/* Marquee / Trust bar - refined, slower, more premium */}
         <div className="relative border-y border-charcoal-900/[0.07] py-3.5 overflow-hidden md:py-4">
           <div className="flex animate-[marquee_45s_linear_infinite] whitespace-nowrap will-change-transform">
             {[...Array(2)].map((_, groupIndex) => (
